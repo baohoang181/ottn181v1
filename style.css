@@ -93,3 +93,79 @@ body {
     .home-grid { grid-template-columns: 1fr; }
 }
 
+/* Khung tên nhỏ ở đầu */
+.header-mini-box {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    width: fit-content;
+    margin: 10px auto 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.header-mini-box h1 {
+    font-size: 1.2rem; /* Nhỏ lại */
+    margin: 0;
+    color: #007bff;
+}
+
+.header-mini-box p {
+    font-size: 0.8rem;
+    margin: 0;
+    color: #666;
+}
+
+/* Ô vuông điều khiển gộp lại */
+.control-square-box {
+    background: white;
+    border: 2px solid #007bff;
+    border-radius: 15px;
+    padding: 15px;
+    max-width: 300px; /* Thu nhỏ chiều rộng */
+    margin: 0 auto;
+    box-shadow: 0 4px 15px rgba(0,123,255,0.1);
+}
+
+.box-title {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    color: #007bff;
+    text-align: center;
+}
+
+.control-row {
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.control-row input {
+    font-size: 0.8rem;
+    padding: 3px;
+}
+
+.control-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+}
+
+.btn-start-small {
+    width: 100%;
+    padding: 8px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
