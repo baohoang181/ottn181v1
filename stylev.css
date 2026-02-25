@@ -1,0 +1,95 @@
+:root {
+    --primary: #0056b3;
+    --light-blue: #ebf4ff;
+    --border-color: #d1e3f8;
+    --white: #ffffff;
+    --gold: #f1c40f;
+    --silver: #bdc3c7;
+    --bronze: #cd7f32;
+}
+
+body {
+    margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f8fbff; overflow-x: hidden;
+}
+
+/* Hình khối trang trí phía sau */
+.bg-decoration {
+    position: fixed; top: -10%; left: -10%; width: 50%; height: 60%;
+    background: var(--light-blue); border-radius: 100px;
+    z-index: -1; transform: rotate(-15deg);
+}
+
+.main-wrapper { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+/* Hệ thống khung (Frame) */
+.frame {
+    background: var(--white); border: 2px solid var(--border-color);
+    border-radius: 15px; padding: 20px; margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 86, 179, 0.05);
+}
+
+.home-grid { display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
+
+/* Câu hỏi & Đáp án */
+.question-master-card {
+    background: var(--white); border: 1px solid var(--border-color);
+    border-radius: 20px; padding: 30px; margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.q-number-circle {
+    width: 40px; height: 40px; background: var(--primary); color: white;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: bold; margin-bottom: 15px;
+}
+
+.q-text-frame {
+    border: 1px solid var(--light-blue); padding: 15px; border-radius: 10px;
+    background: #fafcff; margin-bottom: 20px;
+}
+
+.options-container-frame {
+    border: 1px solid #eee; border-radius: 12px; padding: 10px;
+}
+
+.option-row {
+    display: flex; align-items: center; margin: 10px 0; cursor: pointer;
+    transition: all 0.2s;
+}
+
+.opt-symbol {
+    width: 35px; height: 35px; border: 2px solid var(--primary);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    margin-right: 15px; font-weight: bold; background: white;
+}
+
+.opt-content-frame {
+    flex: 1; border: 1px solid #ddd; padding: 12px; border-radius: 8px;
+}
+
+/* Hiệu ứng chọn đáp án */
+.option-row.selected .opt-content-frame {
+    background: var(--light-blue); border-color: var(--primary);
+}
+
+/* Bảng xếp hạng */
+.rank-item {
+    display: flex; flex-direction: column; padding: 15px;
+    border-radius: 10px; border: 1px solid #eee; margin-bottom: 10px;
+}
+
+.rank-item.top-1 { border: 2px solid var(--gold); transform: scale(1.02); }
+.rank-item.top-2 { border: 2px solid var(--silver); }
+.rank-item.top-3 { border: 2px solid var(--bronze); }
+
+.btn-primary, .btn-submit {
+    width: 100%; padding: 15px; border: none; border-radius: 10px;
+    background: var(--primary); color: white; font-weight: bold; cursor: pointer;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .home-grid { grid-template-columns: 1fr; }
+}
+
