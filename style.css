@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>OTTN181V1</title>
+
+<style>
+
+/* GIỮ NGUYÊN MÀU */
 :root {
     --primary: #0056b3;
     --light-blue: #ebf4ff;
@@ -8,164 +17,367 @@
     --bronze: #cd7f32;
 }
 
-body {
-    margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif;
-    background-color: #f8fbff; overflow-x: hidden;
+body{
+    margin:0;
+    font-family:'Segoe UI',Tahoma,sans-serif;
+    background:#f8fbff;
 }
 
-/* Hình khối trang trí phía sau */
-.bg-decoration {
-    position: fixed; top: -10%; left: -10%; width: 50%; height: 60%;
-    background: var(--light-blue); border-radius: 100px;
-    z-index: -1; transform: rotate(-15deg);
+.main-wrapper{
+    width:380px;
+    margin:20px auto;
 }
 
-.main-wrapper { max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-/* Hệ thống khung (Frame) */
-.frame {
-    background: var(--white); border: 2px solid var(--border-color);
-    border-radius: 15px; padding: 20px; margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0, 86, 179, 0.05);
+/* KHUNG CHUNG */
+.frame{
+    background:white;
+    border:2px solid var(--border-color);
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:15px;
 }
 
-.home-grid { display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
-
-/* Câu hỏi & Đáp án */
-.question-master-card {
-    background: var(--white); border: 1px solid var(--border-color);
-    border-radius: 20px; padding: 30px; margin-bottom: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+/* KHUNG TÊN */
+.header-box{
+    text-align:center;
 }
 
-.q-number-circle {
-    width: 40px; height: 40px; background: var(--primary); color: white;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-weight: bold; margin-bottom: 15px;
+.header-box h1{
+    margin:0;
+    color:var(--primary);
+    font-size:20px;
 }
 
-.q-text-frame {
-    border: 1px solid var(--light-blue); padding: 15px; border-radius: 10px;
-    background: #fafcff; margin-bottom: 20px;
+.header-box p{
+    margin:0;
+    font-size:12px;
+    color:#666;
 }
 
-.options-container-frame {
-    border: 1px solid #eee; border-radius: 12px; padding: 10px;
+/* KHUNG ĐIỀU KHIỂN */
+.control-box{
+
 }
 
-.option-row {
-    display: flex; align-items: center; margin: 10px 0; cursor: pointer;
-    transition: all 0.2s;
+.control-title{
+    text-align:center;
+    font-weight:bold;
+    color:var(--primary);
+    margin-bottom:10px;
 }
 
-.opt-symbol {
-    width: 35px; height: 35px; border: 2px solid var(--primary);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    margin-right: 15px; font-weight: bold; background: white;
+.rect{
+    border:1px solid var(--border-color);
+    border-radius:10px;
+    padding:8px;
+    margin-bottom:8px;
 }
 
-.opt-content-frame {
-    flex: 1; border: 1px solid #ddd; padding: 12px; border-radius: 8px;
+.rect label{
+    font-size:13px;
 }
 
-/* Hiệu ứng chọn đáp án */
-.option-row.selected .opt-content-frame {
-    background: var(--light-blue); border-color: var(--primary);
+.rect input,
+.rect textarea{
+    width:100%;
+    margin-top:5px;
+    padding:5px;
+    border-radius:6px;
+    border:1px solid #ccc;
 }
 
-/* Bảng xếp hạng */
+.rect textarea{
+    height:70px;
+    resize:none;
+}
+
+.btn{
+    width:100%;
+    padding:10px;
+    background:var(--primary);
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* CHECKBOX GRID */
+.check-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    font-size:13px;
+}
+
+/* BẢNG XẾP HẠNG GIỮ NGUYÊN */
 .rank-item {
-    display: flex; flex-direction: column; padding: 15px;
-    border-radius: 10px; border: 1px solid #eee; margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    margin-bottom: 8px;
 }
 
-.rank-item.top-1 { border: 2px solid var(--gold); transform: scale(1.02); }
+.rank-item.top-1 { border: 2px solid var(--gold); }
 .rank-item.top-2 { border: 2px solid var(--silver); }
 .rank-item.top-3 { border: 2px solid var(--bronze); }
 
-.btn-primary, .btn-submit {
-    width: 100%; padding: 15px; border: none; border-radius: 10px;
-    background: var(--primary); color: white; font-weight: bold; cursor: pointer;
+/* LOADING */
+.loading{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:rgba(0,0,0,0.2);
+    justify-content:center;
+    align-items:center;
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .home-grid { grid-template-columns: 1fr; }
+.loading-box{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    width:200px;
+    text-align:center;
 }
 
-/* Khung tên nhỏ ở đầu */
-.header-mini-box {
-    background: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    width: fit-content;
-    margin: 10px auto 20px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+.bar{
+    height:8px;
+    background:#eee;
+    border-radius:10px;
+    margin-top:10px;
 }
 
-.header-mini-box h1 {
-    font-size: 1.2rem; /* Nhỏ lại */
-    margin: 0;
-    color: #007bff;
+.progress{
+    height:100%;
+    width:0%;
+    background:var(--primary);
+    border-radius:10px;
 }
 
-.header-mini-box p {
-    font-size: 0.8rem;
-    margin: 0;
-    color: #666;
+</style>
+</head>
+<body>
+
+<div class="main-wrapper">
+
+    <!-- KHUNG 1: TÊN -->
+    <div class="frame header-box">
+
+        <h1>HUY QUIZ MASTER</h1>
+        <p>Tác giả: Gia Huy</p>
+
+    </div>
+
+    <!-- KHUNG 2: ĐIỀU KHIỂN -->
+    <div class="frame control-box">
+
+        <div class="control-title">
+            BẢNG ĐIỀU KHIỂN
+        </div>
+
+        <div class="rect">
+            <label>Tải file</label>
+            <input type="file" id="fileInput">
+        </div>
+
+        <div class="rect">
+            <label>Thời gian (phút)</label>
+            <input type="number" id="time" value="15">
+        </div>
+
+        <div class="rect">
+            <label>Số câu muốn làm</label>
+            <input type="number" id="limit">
+        </div>
+
+        <div class="rect">
+            <div class="check-grid">
+                <label><input type="checkbox" id="shuffleQ"> Xáo câu</label>
+                <label><input type="checkbox" id="shuffleA"> Xáo đáp án</label>
+            </div>
+        </div>
+
+        <div class="rect">
+            <label>Tạo đề từ nội dung</label>
+            <textarea id="content"></textarea>
+            <button class="btn" onclick="generateQuiz()">TẠO ĐỀ</button>
+        </div>
+
+        <button class="btn" onclick="startQuiz()">
+            BẮT ĐẦU
+        </button>
+
+    </div>
+
+    <!-- KHUNG 3: BẢNG XẾP HẠNG (GIỮ NGUYÊN) -->
+    <div class="frame">
+
+        <div style="text-align:center;font-weight:bold;color:var(--primary);margin-bottom:10px">
+            BẢNG XẾP HẠNG
+        </div>
+
+        <div id="leaderboardList"></div>
+
+    </div>
+
+</div>
+
+
+<!-- LOADING -->
+<div class="loading" id="loading">
+
+    <div class="loading-box">
+
+        Đang tạo đề...
+
+        <div class="bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* DATA */
+let quizData=[];
+let history=JSON.parse(localStorage.getItem("huy_quiz_history"))||[];
+
+
+/* LOAD FILE */
+fileInput.onchange=e=>{
+
+    let reader=new FileReader();
+
+    reader.onload=()=>{
+
+        let lines=reader.result.split("\n");
+
+        quizData=[];
+
+        lines.forEach(line=>{
+
+            if(line.includes("Câu hỏi:")){
+
+                quizData.push({
+                    q:line.replace("Câu hỏi:",""),
+                    correct:"Đáp án đúng"
+                });
+
+            }
+
+        });
+
+        alert("Đã tải "+quizData.length+" câu");
+
+    };
+
+    reader.readAsText(e.target.files[0]);
+
+};
+
+
+/* TẠO ĐỀ */
+function generateQuiz(){
+
+    let text=content.value;
+
+    if(!text)return;
+
+    showLoading(()=>{
+
+        let parts=text.split(".");
+
+        quizData=parts.map(x=>({
+            q:x,
+            correct:"Đáp án đúng"
+        }));
+
+        alert("Đã tạo "+quizData.length+" câu");
+
+    });
+
 }
 
-/* Ô vuông điều khiển gộp lại */
-.control-square-box {
-    background: white;
-    border: 2px solid #007bff;
-    border-radius: 15px;
-    padding: 15px;
-    max-width: 300px; /* Thu nhỏ chiều rộng */
-    margin: 0 auto;
-    box-shadow: 0 4px 15px rgba(0,123,255,0.1);
-}
 
-.box-title {
-    font-weight: bold;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-    color: #007bff;
-    text-align: center;
-}
+/* START */
+function startQuiz(){
 
-.control-row {
-    margin-bottom: 10px;
-    font-size: 0.85rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    if(quizData.length==0){
+        alert("Chưa có dữ liệu");
+        return;
+    }
 
-.control-row input {
-    font-size: 0.8rem;
-    padding: 3px;
-}
+    let limit=parseInt(document.getElementById("limit").value);
 
-.control-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5px;
-    font-size: 0.8rem;
-    margin-bottom: 15px;
-}
+    if(limit) quizData=quizData.slice(0,limit);
 
-.btn-start-small {
-    width: 100%;
-    padding: 8px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
+    showLoading(()=>{
+
+        alert("Đề sẵn sàng");
+
+    });
+
 }
 
 
+/* LOADING */
+function showLoading(callback){
+
+    loading.style.display="flex";
+
+    let p=0;
+
+    let interval=setInterval(()=>{
+
+        p+=10;
+
+        progress.style.width=p+"%";
+
+        if(p>=100){
+
+            clearInterval(interval);
+
+            setTimeout(()=>{
+
+                loading.style.display="none";
+                callback();
+
+            },500);
+
+        }
+
+    },200);
+
+}
+
+
+/* LEADERBOARD GIỮ NGUYÊN */
+function renderLeaderboard(){
+
+    let sorted=[...history].sort((a,b)=>b.score-a.score);
+
+    leaderboardList.innerHTML=sorted.map((h,i)=>`
+
+    <div class="rank-item top-${i+1}">
+        Hạng ${i+1}<br>
+        Điểm: ${h.score}<br>
+        ${h.date}
+    </div>
+
+    `).join("");
+
+}
+
+renderLeaderboard();
+
+</script>
+
+</body>
+</html>
