@@ -1,84 +1,95 @@
-<section id="main-control-space" class="main-card-wrapper">
-    <div class="glass-square-panel">
-        
-        <div class="panel-header">
-            <h2 class="panel-title">BẢNG ĐIỀU CHỈNH</h2>
-            <div class="divider-glow"></div>
-        </div>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTTN181 v1 - AI Quiz System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <canvas id="nano-canvas"></canvas>
 
-        <div class="panel-body">
-            <div class="setup-grid">
-                <div class="setup-group full-width">
-                    <label><i class="fa-solid fa-file-import"></i> Nguồn nội dung tài liệu</label>
-                    <div class="input-with-button">
-                        <textarea id="ai-content" placeholder="Dán văn bản vào đây hoặc tải file bên dưới..."></textarea>
-                        <div class="file-upload-zone">
-                            <input type="file" id="file-upload" hidden>
-                            <button type="button" onclick="document.getElementById('file-upload').click()" class="btn-upload">
-                                <i class="fa-solid fa-cloud-arrow-up"></i> Tải file lên (.txt, .docx, .pdf)
-                            </button>
-                            <div id="file-name-display">Chưa có file nào được chọn</div>
-                        </div>
-                    </div>
+    <div class="container">
+        <header class="main-header">
+            <h1 class="logo">OTTN181 <span>v1</span></h1>
+            <p class="tagline">Tác giả: **Huy ★**</p>
+        </header>
+
+        <section id="main-space" class="glass-panel">
+            <h2 class="panel-title">BẢNG ĐIỀU CHỈNH</h2>
+            <div class="divider"></div>
+
+            <div class="grid-layout">
+                <div class="input-group full">
+                    <label><i class="fa-solid fa-file-pdf"></i> Nội dung tài liệu gốc</label>
+                    <textarea id="ai-content" placeholder="Dán nội dung hoặc tải file để AI lấy dữ liệu..."></textarea>
+                    <input type="file" id="file-input" hidden accept=".txt,.pdf,.docx">
+                    <button class="btn-sub" onclick="document.getElementById('file-input').click()">Tải file lên</button>
                 </div>
 
-                <div class="setup-group">
-                    <label>Chế độ làm bài</label>
-                    <select id="quiz-mode" class="modern-select">
-                        <option value="content">Chế độ theo nội dung (Bám sát)</option>
-                        <option value="expand">Chế độ mở rộng (AI thêm kiến thức)</option>
-                        <option value="hard">Chế độ khó (Tư duy logic cao)</option>
+                <div class="input-group">
+                    <label>Chế độ AI</label>
+                    <select id="quiz-mode">
+                        <option value="content">Theo nội dung gốc</option>
+                        <option value="expand">Mở rộng kiến thức</option>
+                        <option value="hard">Chế độ hóc búa</option>
                     </select>
                 </div>
 
-                <div class="setup-group">
-                    <label>Số lượng câu hỏi</label>
-                    <input type="number" id="q-count" value="10" min="1" max="50">
-                </div>
-
-                <div class="setup-group">
-                    <label>Thời gian (phút)</label>
-                    <input type="number" id="q-time" value="15">
-                </div>
-
-                <div class="setup-group">
-                    <label>Mật khẩu bài thi (tùy chọn)</label>
-                    <input type="password" id="quiz-pass" placeholder="Nhập pass để khóa đề...">
-                </div>
-
-                <div class="setup-group full-width shuffle-area">
-                    <div class="toggle-wrapper">
-                        <span>Xáo trộn câu hỏi</span>
-                        <label class="switch">
-                            <input type="checkbox" id="shuffle-q">
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="toggle-wrapper">
-                        <span>Xáo trộn câu trả lời</span>
-                        <label class="switch">
-                            <input type="checkbox" id="shuffle-a">
-                            <span class="slider round"></span>
-                        </label>
+                <div class="input-group">
+                    <label>Số câu & Thời gian</label>
+                    <div class="flex-row">
+                        <input type="number" id="q-count" value="10" placeholder="Câu">
+                        <input type="number" id="q-time" value="15" placeholder="Phút">
                     </div>
                 </div>
 
-                <div class="setup-group full-width ai-prompt-box">
-                    <label class="label-ai"><i class="fa-solid fa-wand-magic-sparkles"></i> Yêu cầu AI đặc biệt</label>
-                    <textarea id="ai-prompt" placeholder="Ví dụ: Tạo bài trắc nghiệm về kiến thức Toán 12 mà không cần dùng file trên..."></textarea>
-                    <p class="ai-hint">Bỏ trống nếu muốn dùng nội dung từ tài liệu/văn bản phía trên.</p>
+                <div class="input-group full shuffle-bar">
+                    <label class="toggle"><input type="checkbox" id="mix-q" checked><span></span> Xáo trộn câu hỏi</label>
+                    <label class="toggle"><input type="checkbox" id="mix-a" checked><span></span> Xáo trộn đáp án</label>
+                </div>
+
+                <div class="input-group">
+                    <label>Mật khẩu bảo mật</label>
+                    <input type="password" id="quiz-pass" placeholder="Bỏ trống nếu không khóa">
+                </div>
+
+                <div class="input-group full">
+                    <label><i class="fa-solid fa-robot"></i> Yêu cầu mở rộng (Prompt)</label>
+                    <textarea id="ai-prompt" placeholder="Ví dụ: Tạo 5 câu đố vui về lịch sử không cần file..."></textarea>
                 </div>
             </div>
-        </div>
 
-        <div class="panel-footer">
-            <button id="btn-gen-ai" class="btn-ai-glow">
-                <span class="ai-icon"><i class="fa-solid fa-robot"></i></span> 
-                TẠO BÀI TRẮC NGHIỆM MỚI
-            </button>
-            <button id="btn-start" class="btn-start-quiz">
-                BẮT ĐẦU VÀO THI <i class="fa-solid fa-chevron-right"></i>
-            </button>
+            <div class="actions">
+                <button id="btn-create" class="btn-ai">TẠO ĐỀ VỚI AI</button>
+                <button id="btn-go" class="btn-start">BẮT ĐẦU LÀM BÀI</button>
+            </div>
+        </section>
+
+        <section id="quiz-workspace" class="hidden">
+            <div id="questions-area"></div>
+            <div class="workspace-footer">
+                <button id="btn-finish" class="btn-submit">NỘP BÀI</button>
+            </div>
+        </section>
+    </div>
+
+    <div id="pop-result" class="overlay hidden">
+        <div class="result-card">
+            <button class="close-x" onclick="ui.closeResult()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="score-circle"><span id="res-score">0</span>/10</div>
+            <h3 id="res-msg">Tuyệt vời!</h3>
+            <p id="res-detail">Bạn đúng 0/0 câu.</p>
+            <div class="pop-btns">
+                <button class="btn-exit" onclick="location.reload()">THOÁT</button>
+                <button class="btn-retry" id="btn-retry-pop">LÀM LẠI</button>
+                <button class="btn-share" onclick="app.share()"><i class="fa-solid fa-share"></i> CHIA SẺ</button>
+            </div>
         </div>
     </div>
-</section>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
