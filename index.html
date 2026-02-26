@@ -3,65 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTTN181V1</title>
+    <title>OTTN181 v1 - Quiz Master Pro</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="bg-decoration"></div>
 
-    <div class="main-wrapper">
-        <section id="home-page">
-            <div class="home-grid">
-                <div class="home-left">
-                    <div class="frame frame-title">
-                        <h1> OTTN181 </h1>
-                        <p>Tác giả: <strong>Huy★</strong></p>
-                    </div>
+    <header class="header-popup popup-box">
+        <div class="nav-left">
+            <button class="btn-sm">Trang chủ</button>
+            <button class="btn-sm">Thư viện</button>
+            <button class="btn-sm">Lịch sử</button>
+        </div>
+        <div class="header-center">
+            <h1>OTTN181</h1>
+            <span class="version">v1</span>
+        </div>
+        <div class="header-right">
+            <button class="btn-sm">⚙️ Cài đặt</button>
+            <span class="author">tác giả Huy ★</span>
+        </div>
+    </header>
 
-                    <div class="frame frame-upload">
-                        <h3 class="label-title"><i class="fas fa-file-alt"></i> Tải tài liệu</h3>
-                        <input type="file" id="fileInput" accept=".txt,.json">
-                    </div>
+    <main id="home-page" class="active">
+        <div class="control-square popup-box">
+            <div class="panel-header-title">BẢNG ĐIỀU CHỈNH</div>
 
-                    <div class="frame frame-settings">
-                        <h3 class="label-title"><i class="fas fa-cog"></i> Thiết lập bài thi</h3>
-                        <div class="settings-list">
-                            <label class="check-container">Xáo trộn câu hỏi <input type="checkbox" id="shuffleQuiz"><span class="checkmark"></span></label>
-                            <label class="check-container">Xáo trộn đáp án <input type="checkbox" id="shuffleAns"><span class="checkmark"></span></label>
-                        </div>
-                    </div>
-
-                    <div class="frame frame-start">
-                        <button id="startBtn" class="btn-primary">Bắt đầu làm bài</button>
-                    </div>
-                </div>
-
-                <div class="home-right">
-                    <div class="frame frame-rank-title">
-                        <h2>Bảng xếp hạng</h2>
-                    </div>
-                    <div id="leaderboardList" class="rank-container">
-                        </div>
+            <div class="sub-box">
+                <label>CHẾ ĐỘ LÀM BÀI</label>
+                <div class="dropdown-container">
+                    <select id="modeSelect" class="styled-input">
+                        <option value="content">Chế độ theo nội dung</option>
+                        <option value="expand">Chế độ mở rộng (AI)</option>
+                        <option value="hard">Chế độ khó (AI)</option>
+                        <option value="request">Theo yêu cầu & nhập nội dung</option>
+                    </select>
                 </div>
             </div>
-        </section>
 
-        <section id="quiz-page" style="display:none">
-            <div class="quiz-header-bar">
-                <button class="btn-close" onclick="askExit()">X</button>
-                <div id="timerDisplay" class="timer-frame">00:00</div>
+            <div class="sub-box">
+                <label>NGUỒN DỮ LIỆU & NỘI DUNG</label>
+                <input type="file" id="fileInput" accept=".txt" class="file-input">
+                <textarea id="manualContent" placeholder="Hoặc dán nội dung/chủ đề tại đây..."></textarea>
             </div>
 
-            <div id="quizContainer">
+            <div class="sub-box grid-2">
+                <div>
+                    <label>SỐ CÂU HỎI</label>
+                    <input type="number" id="numQ" value="10" min="1">
                 </div>
-
-            <div class="frame frame-navigation">
-                <div id="questionNodes" class="node-list"></div>
-                <button id="submitBtn" class="btn-submit">NỘP BÀI</button>
+                <div>
+                    <label>THỜI GIAN (PHÚT)</label>
+                    <input type="number" id="fullTime" value="15" min="1">
+                </div>
             </div>
-        </section>
+
+            <div class="sub-box">
+                <label>TÙY CHỌN NÂNG CAO</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="shuffleQ" checked> Xáo trộn câu</label>
+                    <label><input type="checkbox" id="shuffleA" checked> Xáo trộn đáp án</label>
+                </div>
+                <input type="password" id="quizPass" placeholder="Tạo mật khẩu trước khi làm..." class="styled-input">
+            </div>
+
+            <div class="action-box">
+                <button onclick="handleAIStart()" class="btn-main-glow">BẮT ĐẦU TẠO ĐỀ</button>
+                <div class="flex-row">
+                    <button class="btn-outline" onclick="openEditMode()">Chỉnh sửa bài</button>
+                    <button class="btn-outline">Chia sẻ bài</button>
+                    <button class="btn-outline" onclick="location.reload()">Làm lại</button>
+                </div>
+            </div>
+
+            <div class="sub-box preview-mini">
+                <label>TRẠNG THÁI & XEM TRƯỚC</label>
+                <div id="statusInfo">Chưa có dữ liệu bài trắc nghiệm.</div>
+            </div>
+        </div>
+    </main>
+
+    <main id="quiz-page" style="display:none;">
+        <div class="quiz-container popup-box">
+            <div class="quiz-top">
+                <div class="progress-info">
+                    <span id="qIndexText">Câu 1/10</span>
+                    <div class="bar-bg"><div id="bar-fill"></div></div>
+                </div>
+                <div id="timer-box">15:00</div>
+            </div>
+            <div id="question-area" class="question-box">
+                </div>
+            <div class="quiz-nav">
+                <button onclick="prevQ()" class="btn-nav">Câu trước</button>
+                <button onclick="showSubmitConfirm()" class="btn-submit">NỘP BÀI</button>
+                <button onclick="nextQ()" class="btn-nav">Câu tiếp</button>
+            </div>
+        </div>
+    </main>
+
+    <main id="result-page" style="display:none;">
+        <div class="result-box popup-box">
+            <div class="score-circle">
+                <h2 id="finalScore">8/10</h2>
+                <span id="finalPercent">80%</span>
+            </div>
+            <div class="result-actions">
+                <button class="btn-main" onclick="location.reload()">Làm bài mới</button>
+                <button class="btn-outline">Xem đáp án chi tiết</button>
+            </div>
+        </div>
+    </main>
+
+    <section class="leaderboard-section">
+        <div class="leaderboard-popup popup-box">
+            <div class="leaderboard-header">🏆 BẢNG XẾP HẠNG</div>
+            <div id="leaderboardList">
+                </div>
+        </div>
+    </section>
+
+    <div id="loading-overlay" class="overlay" style="display:none;">
+        <div class="popup-box loader-inner">
+            <div class="ai-circle"></div>
+            <h3>AI ĐANG TẠO ĐỀ...</h3>
+            <div class="loading-bar-wrap">
+                <div id="loading-fill"></div>
+            </div>
+            <p id="loading-status">Đang phân tích tài liệu...</p>
+        </div>
     </div>
+
+    <div id="name-popup" class="overlay" style="display:none;">
+        <div class="popup-box name-box">
+            <h3>BẠN TÊN LÀ GÌ?</h3>
+            <p>Nhập tên để lưu kết quả vào bảng xếp hạng</p>
+            <input type="text" id="userName" placeholder="Nhập tên của Huy..." class="styled-input">
+            <div class="flex-row">
+                <button class="btn-main" onclick="startQuiz(false)">ĐỒNG Ý</button>
+                <button class="btn-outline" onclick="startQuiz(true)">BỎ QUA</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-fixed">
+        <span>OTTN181</span>
+        <span>v1</span>
+        <span>tác giả Huy ★</span>
+    </footer>
 
     <script src="script.js"></script>
 </body>
