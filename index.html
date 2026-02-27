@@ -3,138 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTTN181 v1 - Huy Ultimate System</title>
+    <title>OTTN181 v1 - Diamond Core Edition</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';</script>
 </head>
 <body>
     <canvas id="nano-canvas"></canvas>
 
     <main class="container">
-        <header class="header-main">
-            <h1>OTTN181 <span class="v-tag">v1</span></h1>
-            <p class="author">tác giả Huy ★</p>
+        <header class="header-main ani-fade">
+            <h1 class="logo-text">OTTN181 <span class="v-tag">v1</span></h1>
+            <p class="author">Tác giả Huy ★ Diamond Edition</p>
         </header>
 
-        <section id="control-panel" class="square-box active">
-            <h2 class="panel-header">BẢNG ĐIỀU CHỈNH</h2>
-            
+        <section id="control-panel" class="square-box ani-slide-up">
+            <h2 class="panel-header">TRẠM ĐIỀU KHIỂN</h2>
             <div class="control-grid">
-                <div class="input-group full">
-                    <label>Tên bài trắc nghiệm</label>
-                    <input type="text" id="quiz-title" placeholder="Nhập tiêu đề cho đề thi này...">
-                </div>
-
-                <div class="input-group">
-                    <label>Tải file lên</label>
-                    <input type="file" id="file-upload">
-                </div>
-
-                <div class="input-group">
-                    <label>Số câu hỏi</label>
-                    <input type="number" id="q-count" value="10">
-                </div>
-
-                <div class="input-group">
-                    <label>Thời gian (phút)</label>
-                    <input type="number" id="q-time" value="15">
-                </div>
-
-                <div class="input-group">
-                    <label>Chế độ làm bài</label>
+                <div class="input-group full"><label>Tên bài trắc nghiệm</label><input type="text" id="quiz-title" value="Đề thi của Huy"></div>
+                <div class="input-group" id="box-file"><label>Tải file nguồn</label><input type="file" id="file-upload"></div>
+                <div class="input-group"><label>Số câu</label><input type="number" id="q-count" value="10"></div>
+                <div class="input-group"><label>Thời gian</label><input type="number" id="q-time" value="15"></div>
+                <div class="input-group"><label>Chế độ AI</label>
                     <select id="quiz-mode">
-                        <option value="content">Chế độ theo nội dung</option>
-                        <option value="expand">Chế độ mở rộng</option>
-                        <option value="hard">Chế độ khó</option>
+                        <option value="content">Nội dung</option>
+                        <option value="expand">Mở rộng</option>
+                        <option value="hard">Khó</option>
                     </select>
                 </div>
-
-                <div class="input-group full">
-                    <label>Mật khẩu bài làm (Tạo mật khẩu trước khi vào đề)</label>
-                    <input type="password" id="quiz-pass" placeholder="Nhập mật khẩu nếu muốn bảo mật...">
-                </div>
-
+                <div class="input-group full"><label>Mật khẩu</label><input type="password" id="quiz-pass"></div>
                 <div class="input-group full flex-row">
-                    <label class="cb-label"><input type="checkbox" id="mix-q" checked> Xáo trộn câu hỏi</label>
-                    <label class="cb-label"><input type="checkbox" id="mix-a" checked> Xáo trộn câu trả lời</label>
+                    <label class="cb"><input type="checkbox" id="mix-q" checked> Xáo trộn câu</label>
+                    <label class="cb"><input type="checkbox" id="mix-a" checked> Xáo trộn đáp án</label>
                 </div>
-
-                <div class="input-group full highlight">
-                    <label>Yêu cầu mở rộng/Tạo mới (AI làm bài không theo tài liệu)</label>
-                    <textarea id="ai-prompt" placeholder="Huy muốn AI mở rộng thêm gì? Hoặc yêu cầu AI tạo đề mới hoàn toàn tại đây..."></textarea>
+                <div class="input-group full highlight" id="box-prompt">
+                    <label>Yêu cầu cho AI</label>
+                    <textarea id="ai-prompt" placeholder="Nhập nội dung hoặc yêu cầu tại đây..."></textarea>
                 </div>
             </div>
-
             <div class="actions-grid">
-                <button class="btn-sub" onclick="app.checkEditCondition()">CHỈNH SỬA ĐÁP ÁN</button>
-                <button class="btn-sub" onclick="app.share()">CHIA SẺ</button>
-                <button class="btn-sub" onclick="location.reload()">LÀM LẠI</button>
-                <button id="btn-run" class="btn-gold">KÍCH HOẠT AI & TẠO BÀI</button>
+                <button class="btn-sub ani-btn" onclick="app.checkEdit()">CHỈNH SỬA</button>
+                <button class="btn-sub ani-btn" onclick="app.showLeaderboard()">BẢNG XẾP HẠNG</button>
+                <button class="btn-sub ani-btn" onclick="app.restoreSettings()">LÀM LẠI</button>
+                <button id="btn-run" class="btn-gold ani-btn">KÍCH HOẠT AI</button>
             </div>
         </section>
 
         <section id="workspace" class="hidden">
-            <div class="quiz-status glass">
+            <div class="workspace-header glass">
                 <h3 id="display-title">---</h3>
-                <div id="display-timer">00:00</div>
+                <div id="display-timer" class="timer-glow">00:00</div>
             </div>
-            <div id="quiz-render-area"></div>
-            <button id="btn-done" class="btn-gold">NỘP BÀI KẾT THÚC</button>
+            <div id="quiz-render"></div>
+            <button id="btn-submit" class="btn-gold ani-btn">NỘP BÀI & XUẤT PDF</button>
         </section>
 
-        <section class="square-box">
-            <h3 class="panel-header">🏆 LỊCH SỬ & XẾP HẠNG</h3>
-            <div id="leaderboard-ui"></div>
+        <section id="leaderboard-section" class="square-box hidden">
+            <h2 class="panel-header">BẢNG XẾP HẠNG</h2>
+            <div id="lb-content"></div>
+            <button class="btn-sub ani-btn" onclick="app.goHome()">QUAY LẠI</button>
         </section>
     </main>
 
     <div id="pop-loading" class="overlay hidden">
-        <div class="popup-box">
-            <div class="loader"></div>
-            <h3>AI ĐANG LÀM VIỆC...</h3>
-            <p id="load-txt">Đang phân tích...</p>
+        <div class="popup-box ani-pop">
+            <div class="ai-orb"></div>
+            <h3 id="load-status">AI ĐANG TƯ DUY...</h3>
             <div class="bar-bg"><div id="bar-fill"></div></div>
-        </div>
-    </div>
-
-    <div id="pop-name" class="overlay hidden">
-        <div class="popup-box">
-            <h3>DANH TÍNH NGƯỜI LÀM</h3>
-            <p>Nhập tên trước khi vào làm bài</p>
-            <input type="text" id="user-name" placeholder="Tên của bạn là gì?">
-            <div class="pop-actions">
-                <button class="btn-gold" onclick="app.confirmEntry()">OK BẮT ĐẦU</button>
-                <button class="btn-sub" onclick="app.confirmEntry(true)">BỎ QUA</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="pop-error" class="overlay hidden">
-        <div class="popup-box error">
-            <h3>CẢNH BÁO ĐIỀU KIỆN!</h3>
-            <p>Huy ơi, cần có câu hỏi từ AI trước mới có thể Chỉnh sửa được nhé!</p>
-            <button class="btn-gold" onclick="ui.close('pop-error')">ĐÃ HIỂU (OK)</button>
+            <p id="ai-debug" style="font-size:10px; color:#999; margin-top:10px"></p>
         </div>
     </div>
 
     <div id="pop-editor" class="overlay hidden">
-        <div class="popup-box wide">
-            <h3>TRÌNH CHỈNH SỬA ĐÁP ÁN</h3>
-            <div id="editor-area" class="scrollable"></div>
-            <button class="btn-gold" onclick="ui.close('pop-editor')">XÁC NHẬN SỬA XONG</button>
+        <div class="popup-box wide ani-pop">
+            <button class="btn-x-left" onclick="app.editorBack()">✕</button>
+            <h3 id="edit-header">Trình chỉnh sửa</h3>
+            <div id="edit-body"></div>
+            <div class="pop-actions-left">
+                <button class="btn-gold hidden" id="btn-save-edit">XÁC NHẬN OK</button>
+            </div>
         </div>
     </div>
 
-    <div id="pop-result" class="overlay hidden">
-        <div class="popup-box">
-            <div class="score-tag" id="score-val">0</div>
-            <h2 id="score-msg">Làm tốt lắm!</h2>
-            <div class="pop-actions">
-                <button class="btn-sub" onclick="location.reload()">LÀM LẠI MỚI</button>
-                <button class="btn-gold" onclick="ui.close('pop-result')">XEM ĐÁP ÁN</button>
-            </div>
+    <div id="pop-congrats" class="overlay hidden">
+        <div class="popup-box ani-pop">
+            <div class="win-ring">✨</div>
+            <h3>HOÀN THÀNH</h3>
+            <button class="btn-gold ani-btn" onclick="app.openName()">BẮT ĐẦU NGAY</button>
+        </div>
+    </div>
+
+    <div id="pop-name" class="overlay hidden">
+        <div class="popup-box ani-pop">
+            <h3>DANH TÍNH</h3>
+            <input type="text" id="user-name" placeholder="Tên của bạn...">
+            <button class="btn-gold ani-btn" onclick="app.enterExam()">VÀO PHÒNG THI</button>
         </div>
     </div>
 
